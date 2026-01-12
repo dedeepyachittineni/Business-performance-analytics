@@ -1,1 +1,1 @@
-This folder contains data model and schema design file
+This folder contains data model and schema design file.
