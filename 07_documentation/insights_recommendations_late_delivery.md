@@ -66,3 +66,23 @@ Break late deliveries into stages and identify where delays are happening:
 - Relationship between late delivery and review score
 - Late delivery impact on repeat purchase behavior
 - Seller-level RCA (top 20 sellers by late rate and volume)
+
+
+---
+
+## Impact on Customer Satisfaction
+
+### Insight
+Orders delivered late have a noticeably lower average review score compared to on-time deliveries.
+This confirms that delivery delays directly impact customer satisfaction and experience.
+
+### Business Implication
+- Late deliveries contribute to lower ratings and negative reviews
+- Poor reviews can reduce repeat purchases and brand trust
+- Operational issues translate into customer-facing risks
+
+### Recommendation
+- Treat late delivery reduction as a customer experience priority, not just an operations metric
+- Track late delivery rate and review score together in executive dashboards
+- Use delivery performance as an input into seller and logistics partner evaluations
+
