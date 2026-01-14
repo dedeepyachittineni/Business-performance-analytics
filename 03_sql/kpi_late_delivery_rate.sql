@@ -1,14 +1,24 @@
--- KPI: Late Delivery Rate
--- Description: % of delivered orders that arrived after the estimated delivery date
+-- KPI: Late Delivery Rate (Delivered Orders)
+-- Definition: % of delivered orders where delivered_customer_date > estimated_delivery_date.
+-- Notes: Uses TRY_CONVERT for date safety and NULLIF to avoid divide-by-zero.
 
 SELECT
-    ROUND(
-        100.0 * SUM(CASE
-            WHEN o.order_delivered_customer_date > o.order_estimated_delivery_date THEN 1
+    COUNT(*) AS delivered_orders,
+    SUM(CASE
+            WHEN TRY_CONVERT(datetime2, o.order_delivered_customer_date)
+               > TRY_CONVERT(datetime2, o.order_estimated_delivery_date) THEN 1
             ELSE 0
-        END) / COUNT(*)
-    , 2) AS late_delivery_rate_pct
-FROM orders o
+        END) AS late_delivered_orders,
+    CAST(
+        100.0 * SUM(CASE
+                        WHEN TRY_CONVERT(datetime2, o.order_delivered_customer_date)
+                           > TRY_CONVERT(datetime2, o.order_estimated_delivery_date) THEN 1
+                        ELSE 0
+                    END)
+        / NULLIF(COUNT(*), 0)
+        AS decimal(5,2)
+    ) AS late_delivery_rate_pct
+FROM dbo.orders o
 WHERE o.order_status = 'delivered'
-  AND o.order_delivered_customer_date IS NOT NULL
-  AND o.order_estimated_delivery_date IS NOT NULL;
+  AND TRY_CONVERT(datetime2, o.order_delivered_customer_date) IS NOT NULL
+  AND TRY_CONVERT(datetime2, o.order_estimated_delivery_date) IS NOT NULL;
